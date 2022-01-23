@@ -1,12 +1,13 @@
 // src/app.js
 
-import { Auth, getUser } from './auth';
+import { getUserFragments } from "./api";
+import { Auth, getUser } from "./auth";
 
 async function init() {
   // Get our UI elements
-  const userSection = document.querySelector('#user');
-  const loginBtn = document.querySelector('#login');
-  const logoutBtn = document.querySelector('#logout');
+  const userSection = document.querySelector("#user");
+  const loginBtn = document.querySelector("#login");
+  const logoutBtn = document.querySelector("#logout");
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -22,6 +23,9 @@ async function init() {
 
   // See if we're signed in (i.e., we'll have a `user` object)
   const user = await getUser();
+  
+  // Do an authenticated request to the fragments API server and log the result
+  getUserFragments(user);
   if (!user) {
     // Disable the Logout button
     logoutBtn.disabled = true;
@@ -35,11 +39,13 @@ async function init() {
   userSection.hidden = false;
 
   // Show the user's username
-  userSection.querySelector('.username').innerText = user.username;
+  userSection.querySelector(".username").innerText = user.username;
 
   // Disable the Login button
   loginBtn.disabled = true;
+
+ 
 }
 
 // Wait for the DOM to be ready, then start the app
-addEventListener('DOMContentLoaded', init);
+addEventListener("DOMContentLoaded", init);
