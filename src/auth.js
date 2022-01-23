@@ -17,7 +17,6 @@ Amplify.configure({
     // Hosted UI configuration
     oauth: {
       // Amazon Hosted UI Domain
-      process.env.AWS_COGNTIO_HOSTED_UI_DOMAIN 
       domain: process.env.AWS_COGNITO_HOSTED_UI_DOMAIN,
 
       // These scopes must match what you set in the User Pool for this App Client
