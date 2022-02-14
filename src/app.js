@@ -1,6 +1,6 @@
 // src/app.js
 
-import { getUserFragments } from "./api";
+import { getUserFragments, postFragment } from "./api";
 import { Auth, getUser } from "./auth";
 
 async function init() {
@@ -8,6 +8,19 @@ async function init() {
   const userSection = document.querySelector("#user");
   const loginBtn = document.querySelector("#login");
   const logoutBtn = document.querySelector("#logout");
+  const textFragmentBtn = document.querySelector("#textFragmentBtn")
+  const textFragmentInput = document.querySelector("#textFragmentInput")
+  const getFragmentBtn = document.querySelector('#getFragmentBtn');
+
+  //Submit button
+  textFragmentBtn.onclick = () => {
+    // console.log("text", textFragmentInput.value)
+    postFragment(user, textFragmentInput.value)
+  };
+  getFragmentBtn.onclick = () => {
+    getUserFragments()
+  }
+
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
