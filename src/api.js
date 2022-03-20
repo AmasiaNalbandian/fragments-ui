@@ -28,7 +28,7 @@ export async function getUserFragments(user) {
   }
 }
 
-export async function postFragment(user, textFragment) {
+export async function postFragment(user, textFragment, fragmentType = "text/plain") {
   console.log('Creating a new fragment');
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
@@ -36,7 +36,7 @@ export async function postFragment(user, textFragment) {
       headers: {
         // Include the user's ID Token in the request so we're authorized
         Authorization: `Bearer ${user.idToken}`,
-        "Content-Type": "text/plain",
+        "Content-Type": `${fragmentType}`,
       },
       body: `${textFragment}`
     });

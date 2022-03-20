@@ -8,19 +8,18 @@ async function init() {
   const userSection = document.querySelector("#user");
   const loginBtn = document.querySelector("#login");
   const logoutBtn = document.querySelector("#logout");
-  const textFragmentBtn = document.querySelector("#textFragmentBtn")
-  const textFragmentInput = document.querySelector("#textFragmentInput")
-  const getFragmentBtn = document.querySelector('#getFragmentBtn');
+  const textFragmentBtn = document.querySelector("#textFragmentBtn");
+  const textFragmentInput = document.querySelector("#textFragmentInput");
+  const getFragmentBtn = document.querySelector("#getFragmentBtn");
+  const fragmentType = document.querySelector("#fragmentType");
 
   //Submit button
   textFragmentBtn.onclick = () => {
-    // console.log("text", textFragmentInput.value)
-    postFragment(user, textFragmentInput.value)
+    postFragment(user, textFragmentInput.value, fragmentType.value);
   };
   getFragmentBtn.onclick = () => {
-    getUserFragments()
-  }
-
+    getUserFragments(user);
+  };
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -36,7 +35,7 @@ async function init() {
 
   // See if we're signed in (i.e., we'll have a `user` object)
   const user = await getUser();
-  
+
   // Do an authenticated request to the fragments API server and log the result
   getUserFragments(user);
   if (!user) {
@@ -56,8 +55,6 @@ async function init() {
 
   // Disable the Login button
   loginBtn.disabled = true;
-
- 
 }
 
 // Wait for the DOM to be ready, then start the app

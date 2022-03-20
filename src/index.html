@@ -20,12 +20,27 @@
 
       <br />
       <!-- <form action="submitTextFragment()"> -->
-        <label for="text-submission">
-          Please submit the text for the fragment here:</label
-        ><br />
-        <input type="input" id="textFragmentInput" name="fragmentText" />
+      <label> Please submit the text for the fragment here:</label><br />
+      <label>Fragment Type:</label>
+      <select class="ui fluid dropdown" id="fragmentType">
+        <option value="text/plain">text/plain</option>
+        <option value="text/plain; charset=utf-8">
+          text/plain; charset=utf-8
+        </option>
+        <option value="text/markdown">text/markdown</option>
+        <option value="text/html">text/html</option>
+        <option value="application/json">application/json</option>
+      </select>
+      <br />
+      <label>Fragment Data:</label>
+      <textarea
+        type="input"
+        id="textFragmentInput"
+        name="fragmentText"
+      ></textarea>
+      <br />
+      <button id="textFragmentBtn">Submit</button>
 
-        <button id="textFragmentBtn">Submit</button>
       <!-- </form> -->
     </section>
   </body>
