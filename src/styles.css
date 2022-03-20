@@ -9,3 +9,7 @@ tr,
 td {
   border: 1px solid black;
 }
+
+.successMsg {
+  color: green;
+}

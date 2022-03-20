@@ -12,10 +12,16 @@ async function init() {
   const textFragmentInput = document.querySelector("#textFragmentInput");
   const getFragmentBtn = document.querySelector("#getFragmentBtn");
   const fragmentType = document.querySelector("#fragmentType");
-
+  const msg = document.querySelector("#postFeedback");
   //Submit button
   textFragmentBtn.onclick = () => {
-    postFragment(user, textFragmentInput.value, fragmentType.value);
+    if (postFragment(user, textFragmentInput.value, fragmentType.value)) {
+      getFragmentBtn.click()
+      msg.innerHTML = "<b class='successMsg'>Successfully created fragment!</b>"
+      textFragmentInput.value = '';
+    } else {
+      msg.innerHTML = "Error creating fragment!"
+    }
   };
 
   // Retrieve all fragments
@@ -82,6 +88,10 @@ async function init() {
     // Disable the Logout button
     logoutBtn.disabled = true;
     return;
+  } else {
+    // if we are signed in, trigger a get request
+    getFragmentBtn.click()
+
   }
 
   // Log the user info for debugging purposes
