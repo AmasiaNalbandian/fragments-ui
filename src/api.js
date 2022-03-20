@@ -10,9 +10,9 @@ const apiUrl = 'http://ec2-54-163-198-153.compute-1.amazonaws.com:8080'
  * to have an `idToken` attached, so we can send that along with the request.
  */
 export async function getUserFragments(user) {
-  console.log('Requesting user fragments data...');
+  console.log("Requesting user fragments data...", user.idToken);
   try {
-    const res = await fetch(`${apiUrl}/v1/fragments`, {
+    const res = await fetch(`${apiUrl}/v1/fragments?expand=1`, {
       headers: {
         // Include the user's ID Token in the request so we're authorized
         Authorization: `Bearer ${user.idToken}`,
@@ -22,14 +22,19 @@ export async function getUserFragments(user) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
     const data = await res.json();
-    console.log('Got user fragments data', { data });
+    console.log("Got user fragments data", { data });
+    return data.fragments;
   } catch (err) {
-    console.error('Unable to call GET /v1/fragment', { err });
+    console.error("Unable to call GET /v1/fragment", { err });
   }
 }
 
-export async function postFragment(user, textFragment, fragmentType = "text/plain") {
-  console.log('Creating a new fragment');
+export async function postFragment(
+  user,
+  textFragment,
+  fragmentType = "text/plain"
+) {
+  console.log("Creating a new fragment");
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: "POST",
@@ -38,14 +43,14 @@ export async function postFragment(user, textFragment, fragmentType = "text/plai
         Authorization: `Bearer ${user.idToken}`,
         "Content-Type": `${fragmentType}`,
       },
-      body: `${textFragment}`
+      body: `${textFragment}`,
     });
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
     const data = await res.json();
-    console.log('Successfully created fragment', { data });
+    console.log("Successfully created fragment", { data });
   } catch (err) {
-    console.error('Unable to call POST /v1/fragment', { err });
+    console.error("Unable to call POST /v1/fragment", { err });
   }
 }

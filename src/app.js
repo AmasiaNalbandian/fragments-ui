@@ -17,8 +17,48 @@ async function init() {
   textFragmentBtn.onclick = () => {
     postFragment(user, textFragmentInput.value, fragmentType.value);
   };
+
+  // Retrieve all fragments
   getFragmentBtn.onclick = () => {
-    getUserFragments(user);
+    let fragmentHtml = "";
+    let fragmentList = document.querySelector(".fragmentList");
+    fragmentList.innerHTML = "";
+    let allFragments = getUserFragments(user).then((data) => {
+      if (data.length) {
+        // Create the titles for each column and add to the table
+        let header = document.createElement("tr");
+        let headerOptions = ['id', 'created', 'updated', 'type'];
+        for (let column of headerOptions) {
+          let th = document.createElement("th");
+          th.append(column);
+          header.appendChild(th)
+        }
+        fragmentList.appendChild(header);
+
+        for (let fragment of data) {
+          console.log("fragment", fragment);
+          let tr = document.createElement("tr");
+          let id = document.createElement("td");
+          let created = document.createElement("td");
+          let updated = document.createElement("td");
+          let type = document.createElement("td");
+
+          id.append(fragment.id);
+          created.append(fragment.created);
+          updated.append(fragment.updated);
+          type.append(fragment.type);
+          tr.append(id, created, updated, type);
+
+          fragmentList.appendChild(tr);
+        }
+      } else {
+        let td = document.createElement("td");
+        td.append("No fragments were found");
+
+        fragmentList.append(td);
+      }
+    });
+    fragmentList.html = fragmentHtml;
   };
 
   // Wire up event handlers to deal with login and logout.
@@ -37,7 +77,7 @@ async function init() {
   const user = await getUser();
 
   // Do an authenticated request to the fragments API server and log the result
-  getUserFragments(user);
+  // getUserFragments(user);
   if (!user) {
     // Disable the Logout button
     logoutBtn.disabled = true;

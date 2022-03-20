@@ -15,11 +15,9 @@
     </section>
     <section hidden id="user">
       <h2>Hello <span class="username"></span>!</h2>
-
-      <button id="getFragmentBtn">get user fragments</button>
-
-      <br />
-      <!-- <form action="submitTextFragment()"> -->
+    </section>
+    <section>
+      <h2>Create a new fragment:</h2>
       <label> Please submit the text for the fragment here:</label><br />
       <label>Fragment Type:</label>
       <select class="ui fluid dropdown" id="fragmentType">
@@ -40,8 +38,19 @@
       ></textarea>
       <br />
       <button id="textFragmentBtn">Submit</button>
+    </section>
+    <section>
+      <h2>Retrieve all fragment:</h2>
 
-      <!-- </form> -->
+      <button id="getFragmentBtn">get user fragments</button>
+      <table class="fragmentList">
+        <tr>
+          <th>id</th>
+          <th>Created</th>
+          <th>Updated</th>
+          <th>type</th>
+        </tr>
+      </table>
     </section>
   </body>
 </html>
