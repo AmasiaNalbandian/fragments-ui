@@ -50,7 +50,32 @@ export async function postFragment(
     }
     const data = await res.json();
     console.log("Successfully created fragment", { data });
+    return data.fragment;
   } catch (err) {
     console.error("Unable to call POST /v1/fragment", { err });
+    return null;
+  }
+}
+
+export async function deleteFragment(user, fragmentId) {
+  console.log("Creating a new fragment");
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${fragmentId}`, {
+      method: "DELETE",
+      headers: {
+        // Include the user's ID Token in the request so we're authorized
+        Authorization: `Bearer ${user.idToken}`,
+        "Content-Type": `${fragmentType}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log("Successfully Deleted fragment", { data });
+    return data.fragment;
+  } catch (err) {
+    console.error("Unable to call DELETE /v1/fragment", { err });
+    return null;
   }
 }

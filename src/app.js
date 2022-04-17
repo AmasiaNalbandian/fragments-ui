@@ -1,6 +1,6 @@
 // src/app.js
 
-import { getUserFragments, postFragment } from "./api";
+import { deleteFragment, getUserFragments, postFragment } from "./api";
 import { Auth, getUser } from "./auth";
 
 async function init() {
@@ -16,11 +16,12 @@ async function init() {
   //Submit button
   textFragmentBtn.onclick = () => {
     if (postFragment(user, textFragmentInput.value, fragmentType.value)) {
-      getFragmentBtn.click()
-      msg.innerHTML = "<b class='successMsg'>Successfully created fragment!</b>"
-      textFragmentInput.value = '';
+      getFragmentBtn.click();
+      msg.innerHTML =
+        "<b class='successMsg'>Successfully created fragment!</b>";
+      textFragmentInput.value = "";
     } else {
-      msg.innerHTML = "Error creating fragment!"
+      msg.innerHTML = "Error creating fragment!";
     }
   };
 
@@ -33,27 +34,55 @@ async function init() {
       if (data.length) {
         // Create the titles for each column and add to the table
         let header = document.createElement("tr");
-        let headerOptions = ['id', 'created', 'updated', 'type'];
+        let headerOptions = [
+          "ID",
+          "Created",
+          "Updated",
+          "Type",
+          "View",
+          "Actions",
+        ];
         for (let column of headerOptions) {
           let th = document.createElement("th");
           th.append(column);
-          header.appendChild(th)
+          header.appendChild(th);
         }
         fragmentList.appendChild(header);
 
         for (let fragment of data) {
-          console.log("fragment", fragment);
           let tr = document.createElement("tr");
           let id = document.createElement("td");
           let created = document.createElement("td");
           let updated = document.createElement("td");
+          let view = document.createElement("td");
+          let actions = document.createElement("td");
+
           let type = document.createElement("td");
+          let deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "Delete";
+          deleteButton.id = `${fragment.id}`;
+          deleteButton.addEventListener("click", () => {
+            console.log("clicked button with id ", fragment.id);
+            deleteFragment(user, fragment.id);
+          });
+
+          // CONVERSION LINKS
+          let validConversionOptions = getValidConversions(fragment.type);
+          for (let conversionType of validConversionOptions) {
+            let a = document.createElement("a");
+            a.href = `${fragment.id}${conversionType}`
+            a.innerHTML = conversionType;
+            a.style = "margin-right: 20px"
+            view.append(a);
+            // header.appendChild(th);
+          }
 
           id.append(fragment.id);
           created.append(fragment.created);
           updated.append(fragment.updated);
           type.append(fragment.type);
-          tr.append(id, created, updated, type);
+          actions.append(deleteButton);
+          tr.append(id, created, updated, type, view, actions);
 
           fragmentList.appendChild(tr);
         }
@@ -90,8 +119,7 @@ async function init() {
     return;
   } else {
     // if we are signed in, trigger a get request
-    getFragmentBtn.click()
-
+    getFragmentBtn.click();
   }
 
   // Log the user info for debugging purposes
@@ -105,6 +133,28 @@ async function init() {
 
   // Disable the Login button
   loginBtn.disabled = true;
+}
+function getValidConversions(type) {
+  let conversions = [];
+  switch (type) {
+    case "text/plain":
+      conversions = [".txt"];
+      break;
+    case "text/markdown":
+      conversions = [".md", ".html", ".txt"];
+      break;
+    case "text/html":
+      conversions = [".html", ".txt"];
+      break;
+    case "application/json":
+      conversions = [".json", ".txt"];
+      break;
+    case "image/png":
+      conversions = [".png", ".jpg", ".webp", ".gif"];
+      break;
+  }
+
+  return conversions;
 }
 
 // Wait for the DOM to be ready, then start the app
