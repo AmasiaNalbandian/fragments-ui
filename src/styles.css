@@ -1,6 +1,9 @@
+body {
+  background: #333;
+}
 h1 {
-  color: hotpink;
-  font-family: cursive;
+  color: black;
+  font-family: "Times New Roman", Times, serif;
 }
 
 table,
@@ -8,8 +11,73 @@ th,
 tr,
 td {
   border: 1px solid black;
+  font-size: 14px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .successMsg {
   color: green;
+}
+
+.signInWelcome > h2 {
+  font-size: 12px;
+  margin: 0;
+  text-align: right;
+  color: blue;
+}
+
+.flex-container {
+  display: flex;
+  background-color: #333;
+  height: 100%;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  margin: 10px;
+  padding: 20px;
+  font-size: 30px;
+  width: 100%;
+  border-radius: 10px;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.flex-container > div > pre {
+  display: inline-block;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+
+.flex-container > div > section > p {
+  font-size: 14px;
+}
+/* Navigation CSS */
+.topnav {
+  background-color: #5662f6;
+  overflow: hidden;
+}
+
+.topnav a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav h1 {
+  float: left;
+  color: #f2f2f2;
+  text-decoration: none;
+  margin: 0;
+}
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
 }

@@ -7,51 +7,61 @@
     <script type="module" src="app.js"></script>
   </head>
   <body>
-    <h1>Fragments UI</h1>
-    <section>
-      <nav>
-        <button id="login">Login</button> <button id="logout">Logout</button>
-      </nav>
+    <section hidden id="user" class="signInWelcome">
+      <h2>You are signed in as <span class="username"></span>!</h2>
     </section>
-    <section hidden id="user">
-      <h2>Hello <span class="username"></span>!</h2>
+    <div class="topnav">
+      <h1>Fragments UI</h1>
+      <a href="index.html">Home</a>
+      
+      <a href="createFragment.html">Create</a>
+    </div>
+  
+    <section></section>
+    <div class="flex-container">
+      <div>
+        
+        <nav>
+          <button id="login">Login</button>
+          <button id="logout">Logout</button>
+        </nav>
+        <section hidden id="viewFragments">
 
-      <h2>Create a new fragment:</h2>
-      <label> Please submit the text for the fragment here:</label><br />
-      <label>Fragment Type:</label>
-      <select class="ui fluid dropdown" id="fragmentType">
-        <option value="text/plain">text/plain</option>
-        <option value="text/plain; charset=utf-8">
-          text/plain; charset=utf-8
-        </option>
-        <option value="text/markdown">text/markdown</option>
-        <option value="text/html">text/html</option>
-        <option value="application/json">application/json</option>
-      </select>
-      <br />
-      <label>Fragment Data:</label>
-      <textarea
-        type="input"
-        id="textFragmentInput"
-        name="fragmentText"
-      ></textarea>
-      <p id="postFeedback"></p>
-      <br />
-      <button id="textFragmentBtn">Submit</button>
+          <h2>Fragment List</h2>
 
-      <h2>Retrieve all fragment:</h2>
+          <button id="getFragmentBtn">Refresh</button>
+          <table class="fragmentList">
+            <tr>
+              <th>id</th>
+              <th>Created</th>
+              <th>Updated</th>
+              <th>type</th>
+              <th>Actions</th>
+            </tr>
+          </table>
+        </section>
 
-      <button id="getFragmentBtn">get user fragments</button>
-      <table class="fragmentList">
-        <tr>
-          <th>id</th>
-          <th>Created</th>
-          <th>Updated</th>
-          <th>type</th>
-          <th>Actions</th>
+        <section hidden id="editFragment">
 
-        </tr>
-      </table>
-    </section>
+          <h2>Editing Fragment <span class="editFragmentId"></span></h2>
+          <p>To create a new fragment, simply select the file you would like to create a fragment with. 
+            Once it is uploaded you will see the preview on the right.
+        </p>
+          <input
+          type="file"
+          id="fileInput"
+          name="fileInput"
+          accept="text/plain, text/markdown, text/html, application/json, image/png, image/jpeg, image/webp, image/gif"
+        />
+        <br />
+        <p id="postFeedback"></p>
+        </section>
+      </div>
+      <div hidden id="user">
+        <h3>Preview</h3>
+        <pre id="output"></pre>
+        <img id="preview-img" />
+      </div>
+    </div>
   </body>
 </html>
